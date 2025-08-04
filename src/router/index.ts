@@ -37,6 +37,12 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: '/optional',
+      name: 'optional',
+      component: () => import('../views/Optional/Index.vue'),
+
+    }
   ],
 });
 
