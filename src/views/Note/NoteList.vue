@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useNoteStore } from '@/stores/noteStore';
+import {onMounted} from 'vue';
+import {useRouter} from 'vue-router';
+import {useNoteStore} from '@/stores/noteStore';
 
 const noteStore = useNoteStore();
 const router = useRouter();
@@ -9,11 +9,11 @@ const router = useRouter();
 onMounted(noteStore.fetchNotes);
 
 const goToCreate = () => {
-  router.push({ name: 'note-create' }); // /note/form
+  router.push({name: 'note-create'}); // /note/form
 };
 
 const goToEdit = (id: number) => {
-  router.push({ name: 'note-edit', params: { id } }); // /note/edit/:id
+  router.push({name: 'note-edit', params: {id}}); // /note/edit/:id
 };
 
 const confirmDelete = async (id: number) => {
@@ -21,6 +21,11 @@ const confirmDelete = async (id: number) => {
     await noteStore.deleteNote(id);
   }
 };
+const fixHex = (color?: string) => {
+  if (!color) return '#999';
+  return color.startsWith('#') ? color : `#${color}`;
+};
+
 </script>
 
 <template>
@@ -37,6 +42,16 @@ const confirmDelete = async (id: number) => {
           <h3>{{ note.title }}</h3>
           <p>{{ note.content }}</p>
           <small>🕒 {{ new Date(note.updatedAt).toLocaleString() }}</small>
+          <p v-if="note.tag.length === 0">Không có thẻ</p>
+          <div class="note-tag">
+            <p v-for="tag in note.tag" :key="tag.tagId">
+  <span
+    :style="{ backgroundColor: fixHex(tag.tagColor), color: '#fff', padding: '2px 6px', borderRadius: '4px', marginRight: '4px', display: 'inline-block' }">
+    {{ tag.tagName }}
+  </span>
+            </p>
+
+          </div>
         </div>
         <div class="note-actions">
           <button @click="goToEdit(note.id)">✏️ Sửa</button>
@@ -76,7 +91,6 @@ const confirmDelete = async (id: number) => {
 .note-item {
   display: flex;
   justify-content: space-between;
-  background: #f7f7f7;
   padding: 16px;
   margin-bottom: 10px;
   border-radius: 8px;
@@ -91,6 +105,15 @@ const confirmDelete = async (id: number) => {
 .note-info p {
   margin: 4px 0;
   color: #555;
+}
+
+.note-tag {
+  display: flex;
+  gap: 1;
+  margin-right: 8px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #fff;
 }
 
 .note-actions button {

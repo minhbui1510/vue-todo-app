@@ -15,7 +15,7 @@ export default {
 
   async updateNote(id: number, data: UpdateNoteDto): Promise<Note> {
     console.log(`[🔁 PATCH] /notes/${id}`, data);
-    const res = await http.patch<Note>(`/notes/${id}`, data);
+    const res = await http.put<Note>(`/notes/${id}`, data);
     return res.data;
   },
 

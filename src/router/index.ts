@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
+import * as path from "path";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,6 +37,29 @@ const router = createRouter({
           props: route => ({ mode: 'edit', id: Number(route.params.id) }),
         },
       ],
+    },
+    {
+      path: "/tag",
+      name: "tag",
+      children: [
+        {
+          path: 'list',
+          name: 'tag-list',
+          component: () => import('../views/Tag/TagList.vue'),
+        },
+        {
+          path: 'create',
+          name: 'tag-create',
+          component: () => import('../views/Tag/TagForm.vue'),
+          props: { mode: 'create' },
+        },
+        {
+          path: 'edit/:id',
+          name: 'tag-edit',
+          component: () => import('../views/Tag/TagForm.vue'),
+          props: route => ({ mode: 'edit', id: Number(route.params.id) }),
+        }
+      ]
     },
     {
       path: '/optional',
