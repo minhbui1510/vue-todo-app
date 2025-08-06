@@ -129,23 +129,18 @@ const onSubmit = async (values: typeof initialValues.value) => {
   // Convert string[] -> number[]
   const tagIds = (values.tagIds ?? []).map((v) => Number(v)).filter((n) => Number.isFinite(n));
 
+  const payload: CreateNoteWithTagsDto = {
+    title: values.title.trim(),
+    content: values.content.trim(),
+    tagId: tagIds,
+  };
   if (mode === 'create') {
-    const payload: CreateNoteWithTagsDto = {
-      title: values.title.trim(),
-      content: values.content.trim(),
-      tagId: tagIds,
-    };
 
     // ⚠️ Nếu noteStore.addNote vẫn chỉ nhận CreateNoteDto,
     // bạn có thể sửa type ở store hoặc cast tạm:
     await noteStore.addNote(payload as unknown as CreateNoteDto);
   } else {
     const id = Number(route.params.id);
-    const payload: UpdateNoteWithTagsDto = {
-      title: values.title.trim(),
-      content: values.content.trim(),
-      tagIds: tagIds, // để rỗng nếu bạn muốn “không thay đổi tag”
-    };
     await noteStore.updateNote(id, payload as unknown as UpdateNoteDto);
   }
 

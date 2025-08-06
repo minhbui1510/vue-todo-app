@@ -1,72 +1,73 @@
 <script setup lang="ts">
-import {onMounted} from 'vue';
-import {useRouter} from 'vue-router';
-import {useNoteStore} from '@/stores/noteStore';
+import { ref, onMounted, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import {useNoteStore} from "@/stores/noteStore.ts";
+import NoteListView from "@/views/Note/sub-component/NoteListView.vue";
+import NoteCardView from "@/views/Note/sub-component/NoteCardView.vue";
+import {showAlert, showConfirm} from "@/composables/showModal.ts";
 
 const noteStore = useNoteStore();
 const router = useRouter();
 
+const viewMode = ref<'list' | 'card'>('list');
+const currentView = computed(() =>
+  viewMode.value === 'list' ? NoteListView : NoteCardView
+);
+
 onMounted(noteStore.fetchNotes);
 
-const goToCreate = () => {
-  router.push({name: 'note-create'}); // /note/form
-};
+const goToCreate = () => router.push({ name: 'note-create' });
+const goToEdit = (id: number) => router.push({ name: 'note-edit', params: { id } });
 
-const goToEdit = (id: number) => {
-  router.push({name: 'note-edit', params: {id}}); // /note/edit/:id
-};
+const handleDelete = async (id: number) => {
+  const confirmed = await showConfirm({
+    title: 'Xác nhận xoá ghi chú',
+    message: 'Bạn có chắc chắn muốn xoá ghi chú này?'
+  });
 
-const confirmDelete = async (id: number) => {
-  if (confirm('Bạn có chắc chắn muốn xoá ghi chú này?')) {
+  if (confirmed) {
     await noteStore.deleteNote(id);
+    await showAlert({ message: '🗑️ Ghi chú đã được xoá.' });
   }
 };
-const fixHex = (color?: string) => {
-  if (!color) return '#999';
-  return color.startsWith('#') ? color : `#${color}`;
-};
-
 </script>
 
 <template>
   <div class="note-list-container">
     <h2>📒 Danh sách ghi chú</h2>
 
-    <button class="create-button" @click="goToCreate">➕ Tạo ghi chú mới</button>
+    <div class="note-controls">
+      <button class="create-button" @click="goToCreate">➕ Tạo ghi chú mới</button>
+      <select v-model="viewMode">
+        <option value="list">📃 Danh sách</option>
+        <option value="card">📦 Thẻ</option>
+      </select>
+    </div>
 
     <div v-if="noteStore.loading">🔄 Đang tải...</div>
 
-    <ul v-else class="note-list">
-      <li v-for="note in noteStore.notes" :key="note.id" class="note-item">
-        <div class="note-info">
-          <h3>{{ note.title }}</h3>
-          <p>{{ note.content }}</p>
-          <small>🕒 {{ new Date(note.updatedAt).toLocaleString() }}</small>
-          <p v-if="note.tag.length === 0">Không có thẻ</p>
-          <div class="note-tag">
-            <p v-for="tag in note.tag" :key="tag.tagId">
-  <span
-    :style="{ backgroundColor: fixHex(tag.tagColor), color: '#fff', padding: '2px 6px', borderRadius: '4px', marginRight: '4px', display: 'inline-block' }">
-    {{ tag.tagName }}
-  </span>
-            </p>
-
-          </div>
-        </div>
-        <div class="note-actions">
-          <button @click="goToEdit(note.id)">✏️ Sửa</button>
-          <button @click="confirmDelete(note.id)">🗑️ Xoá</button>
-        </div>
-      </li>
-    </ul>
+    <component
+      v-else
+      :is="currentView"
+      :notes="noteStore.notes"
+      @edit="goToEdit"
+      @delete="handleDelete"
+    />
   </div>
 </template>
 
 <style scoped>
 .note-list-container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 40px auto;
   padding: 20px;
+}
+
+.note-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
 }
 
 .create-button {
@@ -75,7 +76,6 @@ const fixHex = (color?: string) => {
   color: white;
   border: none;
   border-radius: 6px;
-  margin-bottom: 20px;
   cursor: pointer;
 }
 
@@ -83,59 +83,9 @@ const fixHex = (color?: string) => {
   background-color: #369f74;
 }
 
-.note-list {
-  list-style: none;
-  padding: 0;
-}
-
-.note-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 16px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.note-info h3 {
-  margin: 0;
-  font-size: 18px;
-}
-
-.note-info p {
-  margin: 4px 0;
-  color: #555;
-}
-
-.note-tag {
-  display: flex;
-  gap: 1;
-  margin-right: 8px;
-  padding: 2px 6px;
-  border-radius: 4px;
-  color: #fff;
-}
-
-.note-actions button {
-  margin-left: 8px;
+select {
   padding: 6px 10px;
-  font-size: 14px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.note-actions button:first-of-type {
-  background-color: #ffa500;
-  color: white;
-}
-
-.note-actions button:last-of-type {
-  background-color: #e74c3c;
-  color: white;
-}
-
-.note-actions button:hover {
-  opacity: 0.9;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 </style>

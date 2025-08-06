@@ -125,7 +125,7 @@ const fixHex = (c?: string) => {
 const colorToPicker = (c?: string) => fixHex(c);
 
 // Điều hướng
-const goBack = () => router.push('/tags');
+const goBack = () => router.push('/tag/list');
 </script>
 
 <style scoped>
