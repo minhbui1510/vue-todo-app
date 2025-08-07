@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+  <div class="">
     <div class="header">
       <h2>🏷️ Danh sách Thẻ</h2>
       <button class="primary" @click="goCreate">➕ Thêm mới</button>
@@ -8,7 +8,7 @@
     <p v-if="tagStore.loading">Đang tải thẻ...</p>
     <p v-else-if="!tagStore.tags.length">Chưa có thẻ nào.</p>
 
-    <ul v-else class="tag-list">
+    <ul v-else class="grid grid-cols-auto gap-3 ">
       <li
         v-for="tag in tagStore.tags"
         :key="tag.id"
@@ -76,13 +76,11 @@ const getTextColor = (hex?: string): string => {
 </script>
 
 <style scoped>
-.wrap { max-width: 760px; }
 .header {
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 12px;
 }
 .primary { background: #228be6; color: #fff; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; }
-.tag-list { list-style: none; padding: 0; margin: 0; }
 .tag-item {
   display: flex; align-items: center; justify-content: space-between;
   padding: 10px 12px; margin-bottom: 8px; border-radius: 10px;

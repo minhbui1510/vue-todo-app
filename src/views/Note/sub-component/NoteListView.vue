@@ -20,7 +20,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <ul class="note-list">
+  <ul class="grid grid-cols-auto gap-2">
     <li v-for="note in notes" :key="note.id">
       <NoteItem
         :note="note"

@@ -1,0 +1,35 @@
+@use './variables' as *;
+@use './mixins' as *;
+
+
+.grid        { display: grid !important; }
+.inline-grid { display: inline-grid !important; }
+
+.flex        { display: flex !important; }
+.inline-flex { display: inline-flex !important; }
+
+.flex-row         { flex-direction: row !important; }
+.flex-row-reverse { flex-direction: row-reverse !important; }
+.flex-col         { flex-direction: column !important; }
+.flex-col-reverse { flex-direction: column-reverse !important; }
+
+.justify-start    { justify-content: flex-start !important; }
+.justify-center   { justify-content: center !important; }
+.justify-end      { justify-content: flex-end !important; }
+.justify-between  { justify-content: space-between !important; }
+.justify-around   { justify-content: space-around !important; }
+.justify-evenly   { justify-content: space-evenly !important; }
+
+.items-start   { align-items: flex-start !important; }
+.items-center  { align-items: center !important; }
+.items-end     { align-items: flex-end !important; }
+.items-stretch { align-items: stretch !important; }
+
+.flex-wrap   { flex-wrap: wrap !important; }
+.flex-nowrap { flex-wrap: nowrap !important; }
+
+// 🔁 Replace grid-cols, gap, gap-x, gap-y bằng mixin
+@include grid-cols($grid-template-columns);
+@include gap-utils('gap', gap, $gap-sizes);
+@include gap-utils('gap-x', column-gap, $gap-sizes);
+@include gap-utils('gap-y', row-gap, $gap-sizes);

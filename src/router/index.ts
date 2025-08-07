@@ -1,6 +1,7 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import {createRouter, createWebHistory} from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import * as path from "path";
+import {authGuard} from "@/router/guards/authGuard.ts";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,15 +10,23 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+      meta: {requiresAuth: true}
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/Login/Login.vue'),
     },
     {
       path: '/about',
       name: 'about',
       component: () => import('../views/AboutView.vue'),
+      meta: {requiresAuth: true}
     },
     {
       path: '/note',
       name: 'note',
+      meta: {requiresAuth: true},
       children: [
         {
           path: 'list',
@@ -28,19 +37,20 @@ const router = createRouter({
           path: 'form',
           name: 'note-create',
           component: () => import('../views/Note/NoteForm.vue'),
-          props: { mode: 'create' },
+          props: {mode: 'create'},
         },
         {
           path: 'edit/:id',
           name: 'note-edit',
           component: () => import('../views/Note/NoteForm.vue'),
-          props: route => ({ mode: 'edit', id: Number(route.params.id) }),
+          props: route => ({mode: 'edit', id: Number(route.params.id)}),
         },
       ],
     },
     {
       path: "/tag",
       name: "tag",
+      meta: {requiresAuth: true},
       children: [
         {
           path: 'list',
@@ -51,13 +61,13 @@ const router = createRouter({
           path: 'create',
           name: 'tag-create',
           component: () => import('../views/Tag/TagForm.vue'),
-          props: { mode: 'create' },
+          props: {mode: 'create'},
         },
         {
           path: 'edit/:id',
           name: 'tag-edit',
           component: () => import('../views/Tag/TagForm.vue'),
-          props: route => ({ mode: 'edit', id: Number(route.params.id) }),
+          props: route => ({mode: 'edit', id: Number(route.params.id)}),
         }
       ]
     },
@@ -69,5 +79,5 @@ const router = createRouter({
     }
   ],
 });
-
+router.beforeEach(authGuard)
 export default router;

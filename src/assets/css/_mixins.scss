@@ -1,0 +1,59 @@
+@use './variables' as *; // ✅ dùng như module
+@mixin card {
+  background: white;
+  padding: 16px;
+  border-radius: $radius;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+// Mixin lặp gap
+@mixin gap-utils($prefix, $property, $map) {
+  @each $key, $value in $map {
+    .#{$prefix}-#{$key} {
+      #{$property}: #{$value} !important;
+    }
+  }
+}
+
+// Mixin tạo grid-cols
+@mixin grid-cols($map) {
+  @each $key, $value in $map {
+    .grid-cols-#{$key} {
+      grid-template-columns: #{$value} !important;
+    }
+  }
+}
+
+
+@mixin respond($breakpoint) {
+  $width: map-get($breakpoints, $breakpoint);
+
+  @if $width {
+    @media (min-width: $width) {
+      @content;
+    }
+  } @else {
+    @warn "❗️#{$breakpoint} không tồn tại trong $breakpoints!";
+  }
+}
+@each $break, $width in $breakpoints {
+  @media (min-width: $width) {
+    .#{$break}\:flex {
+      display: flex !important;
+    }
+
+    .#{$break}\:grid {
+      display: grid !important;
+    }
+
+    .#{$break}\:flex-col {
+      flex-direction: column !important;
+    }
+
+    // Và có thể lặp thêm gap/grid-cols
+    @each $key, $val in $gap-sizes {
+      .#{$break}\:gap-#{$key} {
+        gap: #{$val} !important;
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+// _variables.scss
+
+// ========== COLORS ==========
+$primary: #42b983;
+$secondary: #35495e;
+$danger: #e74c3c;
+$gray-light: #f5f5f5;
+$gray-dark: #333;
+
+// ========== FONT ==========
+$font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+$font-size-base: 16px;
+
+// ========== BORDER ==========
+$border-radius: 6px;
+
+// ========== SPACING / GAP ==========
+$gap-sizes: (
+  1: 4px,
+  2: 8px,
+  3: 12px,
+  4: 16px,
+  5: 20px
+);
+
+// ========== GRID ==========
+$grid-cols: 1 2 3 4 5 6;
+$grid-template-columns: (
+  1: repeat(1, 1fr),
+  2: repeat(2, 1fr),
+  3: repeat(3, 1fr),
+  4: repeat(4, 1fr),
+  5: repeat(5, 1fr),
+  6: repeat(6, 1fr),
+  auto: auto auto auto
+);
+// ========== BREAKPOINTS ==========
+$breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px
+);

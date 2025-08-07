@@ -1,0 +1,62 @@
+@use './variables' as *; // đảm bảo $breakpoints và các biến đã khai báo
+
+// ============================
+// ✅ Center Flex (trung tâm)
+// ============================
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// ============================
+// ✅ Square box
+// ============================
+@mixin square($size) {
+  width: $size;
+  height: $size;
+}
+
+// ============================
+// ✅ Truncate text
+// ============================
+@mixin text-truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// ============================
+// ✅ Responsive (media query)
+// ============================
+@mixin respond($breakpoint) {
+  $width: map-get($breakpoints, $breakpoint);
+
+  @if $width {
+    @media (min-width: $width) {
+      @content;
+    }
+  } @else {
+    @warn "❗️Breakpoint `#{$breakpoint}` không tồn tại trong $breakpoints";
+  }
+}
+
+// ============================
+// ✅ Generate utility theo map
+// ============================
+
+@mixin gap-utils($prefix, $property, $map) {
+  @each $key, $value in $map {
+    .#{$prefix}-#{$key} {
+      #{$property}: #{$value} !important;
+    }
+  }
+}
+
+@mixin grid-cols($map) {
+  @each $key, $value in $map {
+    .grid-cols-#{$key} {
+      grid-template-columns: #{$value} !important;
+    }
+  }
+}

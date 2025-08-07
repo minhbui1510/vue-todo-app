@@ -33,7 +33,7 @@ const handleDelete = async (id: number) => {
 </script>
 
 <template>
-  <div class="note-list-container">
+  <div class="">
     <h2>📒 Danh sách ghi chú</h2>
 
     <div class="note-controls">
@@ -58,9 +58,6 @@ const handleDelete = async (id: number) => {
 
 <style scoped>
 .note-list-container {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 20px;
 }
 
 .note-controls {
