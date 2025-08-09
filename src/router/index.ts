@@ -76,6 +76,19 @@ const router = createRouter({
       name: 'optional',
       component: () => import('../views/Optional/Index.vue'),
 
+    },
+    {
+      path: '/ui-document',
+      name: 'ui-document',
+      meta: {requiresAuth: true},
+      component: () => import('../views/DocumentUI/index.vue'),
+      children: [
+        {
+          path: '/input',
+          name: 'input',
+          component: () => import('../views/DocumentUI/InputDocument.vue')
+        }
+      ]
     }
   ],
 });

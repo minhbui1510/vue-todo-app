@@ -1,0 +1,62 @@
+// _colors.scss
+@use 'variables' as *;
+
+// Primary scale
+$primary-50:  mix(white, $primary, 95%);
+$primary-100: mix(white, $primary, 90%);
+$primary-200: mix(white, $primary, 80%);
+$primary-300: mix(white, $primary, 70%);
+$primary-400: mix(white, $primary, 40%);
+$primary-500: $primary;
+$primary-600: mix(black, $primary, 20%);
+$primary-700: mix(black, $primary, 40%);
+$primary-800: mix(black, $primary, 60%);
+$primary-900: mix(black, $primary, 80%);
+
+// Secondary scale
+$secondary-50:  mix(white, $secondary, 95%);
+$secondary-100: mix(white, $secondary, 90%);
+$secondary-200: mix(white, $secondary, 80%);
+$secondary-300: mix(white, $secondary, 70%);
+$secondary-400: mix(white, $secondary, 40%);
+$secondary-500: $secondary;
+$secondary-600: mix(black, $secondary, 20%);
+$secondary-700: mix(black, $secondary, 40%);
+$secondary-800: mix(black, $secondary, 60%);
+$secondary-900: mix(black, $secondary, 80%);
+
+// Danger scale
+$danger-50:  mix(white, $danger, 95%);
+$danger-100: mix(white, $danger, 90%);
+$danger-200: mix(white, $danger, 80%);
+$danger-300: mix(white, $danger, 70%);
+$danger-400: mix(white, $danger, 40%);
+$danger-500: $danger;
+$danger-600: mix(black, $danger, 20%);
+$danger-700: mix(black, $danger, 40%);
+$danger-800: mix(black, $danger, 60%);
+$danger-900: mix(black, $danger, 80%);
+
+// Gray-light scale
+$gray-light-50:  mix(white, $gray-light, 95%);
+$gray-light-100: mix(white, $gray-light, 90%);
+$gray-light-200: mix(white, $gray-light, 80%);
+$gray-light-300: mix(white, $gray-light, 70%);
+$gray-light-400: mix(white, $gray-light, 40%);
+$gray-light-500: $gray-light;
+$gray-light-600: mix(black, $gray-light, 20%);
+$gray-light-700: mix(black, $gray-light, 40%);
+$gray-light-800: mix(black, $gray-light, 60%);
+$gray-light-900: mix(black, $gray-light, 80%);
+
+// Gray-dark scale
+$gray-dark-50:  mix(white, $gray-dark, 95%);
+$gray-dark-100: mix(white, $gray-dark, 90%);
+$gray-dark-200: mix(white, $gray-dark, 80%);
+$gray-dark-300: mix(white, $gray-dark, 70%);
+$gray-dark-400: mix(white, $gray-dark, 40%);
+$gray-dark-500: $gray-dark;
+$gray-dark-600: mix(black, $gray-dark, 20%);
+$gray-dark-700: mix(black, $gray-dark, 40%);
+$gray-dark-800: mix(black, $gray-dark, 60%);
+$gray-dark-900: mix(black, $gray-dark, 80%);

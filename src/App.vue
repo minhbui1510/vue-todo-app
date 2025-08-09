@@ -12,6 +12,7 @@ import HelloWorld from './components/HelloWorld.vue'
         <RouterLink to="/note/list">Note</RouterLink>
         <RouterLink to="/tag/list">Tag</RouterLink>
         <RouterLink to="/optional">Optional</RouterLink>
+        <RouterLink to="/ui-document">UI</RouterLink>
       </nav>
     </div>
   </header>
