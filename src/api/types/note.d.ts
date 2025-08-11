@@ -1,4 +1,6 @@
 // CreateNoteDto
+import type {Tag} from "@/api/types/tag";
+
 export interface CreateNoteDto {
   title: string;
   content: string;
@@ -19,4 +21,18 @@ export interface Note {
   content: string;
   createdAt: string; // ISO date string
   updatedAt: string;
+  tag: Tag[]
+}
+export interface SearchNoteDto {
+  keyword: string;
+  pageIndex: number;
+  pageSize: number;
+}
+
+export interface SearchNoteResponse {
+  items: Note[];
+  pageIndex: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
 }

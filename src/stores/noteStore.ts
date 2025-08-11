@@ -1,10 +1,17 @@
 import { defineStore } from 'pinia';
-import type {CreateNoteDto, Note, UpdateNoteDto} from "@/api/types/note";
+import type {
+  CreateNoteDto,
+  Note,
+  SearchNoteDto,
+  SearchNoteResponse,
+  UpdateNoteDto
+} from "@/api/types/note";
 import noteService from "@/api/note.service.ts";
 
 export const useNoteStore = defineStore('note', {
   state: () => ({
     notes: [] as Note[],
+    notesList: {} as SearchNoteResponse,
     loading: false,
     error: '' as string | null,
   }),
@@ -15,6 +22,17 @@ export const useNoteStore = defineStore('note', {
       try {
         this.notes = await noteService.getAllNotes();
         console.log(this.notes)
+      } catch (err) {
+        this.error = 'Lỗi khi tải ghi chú';
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async searchNote(search: SearchNoteDto) {
+      this.loading = true;
+      try {
+        this.notesList = await noteService.searchNote(search);
       } catch (err) {
         this.error = 'Lỗi khi tải ghi chú';
       } finally {

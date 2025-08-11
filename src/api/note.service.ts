@@ -1,10 +1,21 @@
 import http from '@/api/http'; // hoặc đường dẫn đúng với file bạn cấu hình interceptor
-import type { CreateNoteDto, Note, UpdateNoteDto } from "@/api/types/note";
+import type {
+  CreateNoteDto,
+  Note,
+  SearchNoteDto,
+  SearchNoteResponse,
+  UpdateNoteDto
+} from "@/api/types/note";
 
 export default {
   async getAllNotes(): Promise<Note[]> {
     const res = await http.get<Note[]>('/notes');
     return res.data.data;
+  },
+
+  async searchNote(search: SearchNoteDto): Promise<SearchNoteResponse[]> {
+    const res = await http.post<SearchNoteResponse>('/notes/search', search);
+    return res.data;
   },
 
   async createNote(data: CreateNoteDto): Promise<Note> {

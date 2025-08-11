@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
+import {computed, onMounted, ref, toRaw, watch} from 'vue';
 import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
 import {useNoteStore} from "@/stores/noteStore.ts";
 import NoteListView from "@/views/Note/sub-component/NoteListView.vue";
 import NoteCardView from "@/views/Note/sub-component/NoteCardView.vue";
@@ -9,31 +10,40 @@ import {showAlert, showConfirm} from "@/composables/showModal.ts";
 const noteStore = useNoteStore();
 const router = useRouter();
 
+// lấy ref reactivity đúng chuẩn pinia
+const { notesList, loading } = storeToRefs(noteStore);
+
 const viewMode = ref<'list' | 'card'>('list');
-const currentView = computed(() =>
-  viewMode.value === 'list' ? NoteListView : NoteCardView
-);
+const currentView = computed(() => (viewMode.value === 'list' ? NoteListView : NoteCardView));
 
-onMounted(noteStore.fetchNotes);
+onMounted(async () => {
+  await noteStore.searchNote({ keyword: '', pageIndex: 1, pageSize: 10 });
+  // log sau khi fetch xong
+  console.log('notesList (after fetch):',  toRaw((notesList.value)));
+});
 
+// log mỗi khi danh sách đổi
+watch(notesList, (v) => {
+  console.log('notesList changed:', toRaw(v));
+}, { deep: true });
+
+// helper
 const goToCreate = () => router.push({ name: 'note-create' });
 const goToEdit = (id: number) => router.push({ name: 'note-edit', params: { id } });
 
 const handleDelete = async (id: number) => {
-  const confirmed = await showConfirm({
-    title: 'Xác nhận xoá ghi chú',
-    message: 'Bạn có chắc chắn muốn xoá ghi chú này?'
-  });
-
+  const confirmed = await showConfirm({ title: 'Xác nhận xoá ghi chú', message: 'Bạn có chắc chắn muốn xoá ghi chú này?' });
   if (confirmed) {
     await noteStore.deleteNote(id);
     await showAlert({ message: '🗑️ Ghi chú đã được xoá.' });
+    // refresh list nếu cần
+    await noteStore.searchNote({ keyword: '', pageIndex: 1, pageSize: 10 });
   }
-};
+}
 </script>
 
 <template>
-  <div class="">
+  <div>
     <h2>📒 Danh sách ghi chú</h2>
 
     <div class="note-controls">
@@ -44,12 +54,12 @@ const handleDelete = async (id: number) => {
       </select>
     </div>
 
-    <div v-if="noteStore.loading">🔄 Đang tải...</div>
+    <div v-if="loading">🔄 Đang tải...</div>
 
     <component
       v-else
       :is="currentView"
-      :notes="noteStore.notes"
+      :notes="notesList?.items || []"
       @edit="goToEdit"
       @delete="handleDelete"
     />
