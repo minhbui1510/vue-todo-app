@@ -1,0 +1,72 @@
+/* trước đây có thể là:
+@import './variables';
+*/
+
+@use './variables' as *;
+@use 'sass:math';
+
+.container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: $gutter;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  /* -($gutter / 2) => -(math.div($gutter, 2)) hoặc calc() */
+  margin-left: -(math.div($gutter, 2));
+  margin-right: -(math.div($gutter, 2));
+}
+
+[class*="col-"], .col, .col-auto {
+  padding-left: math.div($gutter, 2);
+  padding-right: math.div($gutter, 2);
+  min-height: 1px;
+}
+
+.col {
+  flex: 1 0 0%;
+  max-width: 100%;
+}
+.col-auto {
+  flex: 0 0 auto;
+  width: auto;
+  max-width: none;
+}
+
+/* .col-1 … .col-12 */
+@for $i from 1 through $grid-columns {
+  .col-#{$i} {
+    /* percentage($i / $grid-columns) => math.percentage(math.div($i, $grid-columns)) */
+    $w: math.percentage(math.div($i, $grid-columns));
+    flex: 0 0 $w;
+    max-width: $w;
+  }
+}
+
+/* offsets */
+@for $i from 1 through $grid-columns {
+  .offset-#{$i} {
+    margin-left: math.percentage(math.div($i, $grid-columns));
+  }
+}
+
+/* responsive */
+@each $bp, $w in $breakpoints {
+  @media (min-width: #{$w}) {
+    .col-#{$bp}      { flex: 1 0 0%; max-width: 100%; }
+    .col-#{$bp}-auto { flex: 0 0 auto; width: auto; max-width: none; }
+
+    @for $i from 1 through $grid-columns {
+      .col-#{$bp}-#{$i} {
+        $vw: math.percentage(math.div($i, $grid-columns));
+        flex: 0 0 $vw;
+        max-width: $vw;
+      }
+      .offset-#{$bp}-#{$i} {
+        margin-left: math.percentage(math.div($i, $grid-columns));
+      }
+    }
+  }
+}

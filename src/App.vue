@@ -1,23 +1,25 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import Header from "@/components/layouts/Header.vue";
+import Sidebar from "@/components/layouts/Sidebar.vue";
+import MainLayout from "@/components/layouts/MainLayout.vue";
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/note/list">Note</RouterLink>
-        <RouterLink to="/tag/list">Tag</RouterLink>
-        <RouterLink to="/optional">Optional</RouterLink>
-        <RouterLink to="/ui-document">UI</RouterLink>
-      </nav>
+  <div class="container">
+    <div class="col-12">
+      <Header/>
     </div>
-  </header>
+    <div class="flex">
+      <div class="col-3">
+        <Sidebar/>
+      </div>
+      <div class="col-9">
+        <MainLayout/>
+      </div>
 
-  <RouterView />
+    </div>
+  </div>
+
 </template>
 
 <style scoped>
