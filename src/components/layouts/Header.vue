@@ -10,11 +10,11 @@ const schema = yup.object({
 </script>
 
 <template>
-  <div class="col-12 flex">
-    <div class="col-3">
+  <div class="col-12 p-0 flex">
+    <div class="col-3 p-0">
       Logo
     </div>
-    <div class="col-9">
+    <div class="col-9 p-0">
       search component
       <Form @submit="vals => console.log(vals)" :validation-schema="schema">
       <Field name="search" v-slot="{field, errorMessage, meta}">

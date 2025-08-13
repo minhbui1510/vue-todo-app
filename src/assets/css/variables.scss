@@ -54,3 +54,24 @@ $radius-full: 9999px; // bo tròn hoàn toàn (circle/pill)
 
 $grid-columns: 12 !default;
 $gutter: 16px !default;
+
+// ========== SPACING ==========
+
+
+$spacing-unit: 4px;
+
+// scale
+$spacing-scale: (
+  0: 0,
+  1: $spacing-unit,            // 4px
+  2: $spacing-unit * 2,        // 8px
+  3: $spacing-unit * 3,        // 12px
+  4: $spacing-unit * 4,        // 16px
+  5: $spacing-unit * 5,        // 20px
+  6: $spacing-unit * 6,        // 24px
+  8: $spacing-unit * 8,        // 32px
+  10: $spacing-unit * 10,      // 40px
+  12: $spacing-unit * 12,      // 48px
+  16: $spacing-unit * 16,      // 64px
+  20: $spacing-unit * 20,      // 80px
+);

@@ -6,14 +6,14 @@ import MainLayout from "@/components/layouts/MainLayout.vue";
 
 <template>
   <div class="container">
-    <div class="col-12">
+    <div class="col-12 p-0">
       <Header/>
     </div>
     <div class="flex">
-      <div class="col-3">
+      <div class="col-3 p-0">
         <Sidebar/>
       </div>
-      <div class="col-9">
+      <div class="col-9 p-0">
         <MainLayout/>
       </div>
 

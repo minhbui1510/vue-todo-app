@@ -1,0 +1,20 @@
+@use 'variables' as *;
+@use "mixins" as *;
+
+// Margin
+@include generate-spacing(margin, m);
+@include generate-spacing(margin-top, mt);
+@include generate-spacing(margin-right, mr);
+@include generate-spacing(margin-bottom, mb);
+@include generate-spacing(margin-left, ml);
+@include generate-spacing(margin-inline, mx); // margin X (left + right)
+@include generate-spacing(margin-block, my);  // margin Y (top + bottom)
+
+// Padding
+@include generate-spacing(padding, p);
+@include generate-spacing(padding-top, pt);
+@include generate-spacing(padding-right, pr);
+@include generate-spacing(padding-bottom, pb);
+@include generate-spacing(padding-left, pl);
+@include generate-spacing(padding-inline, px); // padding X (left + right)
+@include generate-spacing(padding-block, py);  // padding Y (top + bottom)

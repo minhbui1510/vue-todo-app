@@ -154,7 +154,6 @@ $hover: rgba(255,255,255,.06);
 $accent: #42b983;
 
 .sb {
-  width: 260px;
   background: $bg;
   color: $fg;
   border-right: 1px solid $divider;

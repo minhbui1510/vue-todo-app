@@ -57,3 +57,11 @@
     }
   }
 }
+// Mixin tạo class margin/padding nhanh
+@mixin generate-spacing($prop, $prefix) {
+  @each $key, $value in $spacing-scale {
+    .#{$prefix}-#{$key} {
+      #{$prop}: #{$value};
+    }
+  }
+}
