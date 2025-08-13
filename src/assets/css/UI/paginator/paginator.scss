@@ -1,0 +1,43 @@
+@use '../../variables' as *;
+@use '../../colors' as *;
+
+.ui-paginator {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background-color: $primary-50;
+    color: $primary-700;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background-color: $primary-100;
+      color: $primary-900; // đậm hơn background
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &.is-active {
+      background-color: $primary-500;
+      color: #fff;
+      font-weight: 600;
+    }
+  }
+
+  .ui-paginator__ellipsis {
+    padding: 0 4px;
+    color: $primary-400;
+    user-select: none;
+  }
+}

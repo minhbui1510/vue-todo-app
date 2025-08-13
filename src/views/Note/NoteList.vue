@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import {computed, onMounted, ref, toRaw, watch} from 'vue';
-import { useRouter } from 'vue-router';
-import { storeToRefs } from 'pinia';
+import {useRouter} from 'vue-router';
+import {storeToRefs} from 'pinia';
 import {useNoteStore} from "@/stores/noteStore.ts";
 import NoteListView from "@/views/Note/sub-component/NoteListView.vue";
 import NoteCardView from "@/views/Note/sub-component/NoteCardView.vue";
 import {showAlert, showConfirm} from "@/composables/showModal.ts";
+import Paginator from "@/components/UI/Pagginator/Paginator.vue";
+import {FetchType} from "@/components/UI/model/paginator.enum.ts";
 
 const noteStore = useNoteStore();
 const router = useRouter();
@@ -15,6 +17,9 @@ const { notesList, loading } = storeToRefs(noteStore);
 
 const viewMode = ref<'list' | 'card'>('list');
 const currentView = computed(() => (viewMode.value === 'list' ? NoteListView : NoteCardView));
+
+const currentPage = ref(1);
+const totalItems = ref(0);
 
 onMounted(async () => {
   await noteStore.searchNote({ keyword: '', pageIndex: 1, pageSize: 10 });
@@ -63,13 +68,18 @@ const handleDelete = async (id: number) => {
       @edit="goToEdit"
       @delete="handleDelete"
     />
+    <Paginator
+      v-model:currentPage="currentPage"
+      :perPage="10"
+      :totalItems="notesList?.total"
+      :mode="FetchType.SERVER"
+      :statusText="`Đang hiển thị trang thứ ${currentPage} trên tổng số ${notesList?.total} trang`"
+      @page-change="p => noteStore.searchNote({ keyword: '', pageIndex: p, pageSize: 10 })"
+    />
   </div>
 </template>
 
 <style scoped>
-.note-list-container {
-}
-
 .note-controls {
   display: flex;
   justify-content: space-between;

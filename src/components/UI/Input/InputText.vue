@@ -1,26 +1,25 @@
-<script setup>
-const props = defineProps({
-  modelValue: String,
-  name: String,
-  placeholder: String,
-  error: String,
-  onInput: Function,
-  onBlur: Function
-});
-
-const emit = defineEmits(['update:modelValue']);
+<script setup lang="ts">
+const props = defineProps<{
+  modelValue: string | number
+  name?: string
+  invalid?: boolean
+  placeholder?: string
+}>();
+const emit = defineEmits<{
+  (e:'update:modelValue', v:string|number):void
+  (e:'blur', ev:FocusEvent):void
+}>();
 </script>
 
 <template>
-  <div class="ui-input">
+  <div class="ui-input" :class="{ 'is-invalid': invalid }">
     <input
-      type="text"
       :name="name"
       :value="modelValue"
       :placeholder="placeholder"
-      @input="(e) => { emit('update:modelValue', e.target.value); props.onInput?.(e); }"
-      @blur="props.onBlur"
+      @input="e => emit('update:modelValue', (e.target as HTMLInputElement).value)"
+      @blur="e => emit('blur', e)"
     />
-    <p v-if="error" class="error">{{ error }}</p>
+    <slot name="error"/>
   </div>
 </template>
