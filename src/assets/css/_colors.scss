@@ -60,6 +60,59 @@ $gray-dark-600: color.mix(black, $gray-dark, 20%);
 $gray-dark-700: color.mix(black, $gray-dark, 40%);
 $gray-dark-800: color.mix(black, $gray-dark, 60%);
 $gray-dark-900: color.mix(black, $gray-dark, 80%);
+
+
+// Success scale
+$success-50:  color.mix(white, $success, 95%);
+$success-100: color.mix(white, $success, 90%);
+$success-200: color.mix(white, $success, 80%);
+$success-300: color.mix(white, $success, 70%);
+$success-400: color.mix(white, $success, 40%);
+$success-500: $success;
+$success-600: color.mix(black, $success, 10%);
+$success-700: color.mix(black, $success, 20%);
+$success-800: color.mix(black, $success, 30%);
+$success-900: color.mix(black, $success, 40%);
+
+// Warning scale
+$warning-50:  color.mix(white, $warning, 95%);
+$warning-100: color.mix(white, $warning, 90%);
+$warning-200: color.mix(white, $warning, 80%);
+$warning-300: color.mix(white, $warning, 70%);
+$warning-400: color.mix(white, $warning, 40%);
+$warning-500: $warning;
+$warning-600: color.mix(black, $warning, 10%);
+$warning-700: color.mix(black, $warning, 20%);
+$warning-800: color.mix(black, $warning, 30%);
+$warning-900: color.mix(black, $warning, 40%);
+
+// ===== Success =====
+$success-scale: (
+  50:  $success-50,
+  100: $success-100,
+  200: $success-200,
+  300: $success-300,
+  400: $success-400,
+  500: $success-500,
+  600: $success-600,
+  700: $success-700,
+  800: $success-800,
+  900: $success-900
+);
+
+// ===== Warning =====
+$warning-scale: (
+  50:  $warning-50,
+  100: $warning-100,
+  200: $warning-200,
+  300: $warning-300,
+  400: $warning-400,
+  500: $warning-500,
+  600: $warning-600,
+  700: $warning-700,
+  800: $warning-800,
+  900: $warning-900
+);
 // ===== Primary =====
 $primary-scale: (
   50:  $primary-50,
@@ -137,6 +190,8 @@ $color-palettes-map: (
   danger:     $danger-scale,
   // Nếu dự án KHÔNG có gray base, hãy xóa dòng dưới
   gray-light: $gray-light-scale,
-  gray-dark:  $gray-dark-scale
+  gray-dark:  $gray-dark-scale,
+  success:     $success-scale,
+  warning:     $warning-scale,
 ) !default;
 

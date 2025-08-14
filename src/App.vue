@@ -2,6 +2,9 @@
 import Header from "@/components/layouts/Header.vue";
 import Sidebar from "@/components/layouts/Sidebar.vue";
 import MainLayout from "@/components/layouts/MainLayout.vue";
+import CenterModalPresenter from "@/components/shared/CenterModalPresenter.vue";
+import LoadingOverlay from "@/components/shared/LoadingOverlay.vue";
+
 </script>
 
 <template>
@@ -19,7 +22,8 @@ import MainLayout from "@/components/layouts/MainLayout.vue";
 
     </div>
   </div>
-
+  <CenterModalPresenter />
+  <LoadingOverlay/>
 </template>
 
 <style scoped>

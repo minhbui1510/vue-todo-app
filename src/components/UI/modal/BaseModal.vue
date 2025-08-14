@@ -23,7 +23,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onEsc));
   <Teleport to="body">
     <transition name="fade">
       <div v-if="modelValue" class="modal-overlay" @click.self="close">
-        <div class="modal-content">
+        <div class="alert-modal modal-content">
           <header class="modal-header">
             <slot name="header">
               <h3>Modal</h3>

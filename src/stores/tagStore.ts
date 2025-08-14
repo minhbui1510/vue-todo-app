@@ -1,6 +1,11 @@
-import { defineStore } from 'pinia';
-import type { Tag, CreateTagDto, UpdateTagDto } from '@/api/types/tag';
+import {defineStore} from 'pinia';
+import type {CreateTagDto, Tag, UpdateTagDto} from '@/api/types/tag';
 import tagService from "@/api/tag.service.ts";
+import {useCenterModal} from "@/composables/useCenterModal.ts";
+import {useCenterModalStore} from "@/stores/center-modal.store.ts";
+import {normalizeError} from "@/api/http.ts";
+
+const cm = useCenterModalStore();
 
 export const useTagStore = defineStore('tag', {
   state: () => ({
@@ -12,12 +17,17 @@ export const useTagStore = defineStore('tag', {
   actions: {
     async fetchTags() {
       this.loading = true;
+      await cm.startLoading('Đồng bộ dữ liệu…');
+
       try {
         this.tags = await tagService.getAllTags();
       } catch (err) {
         this.error = 'Lỗi khi tải thẻ';
+        normalizeError(err)
+
       } finally {
         this.loading = false;
+        cm.stopLoading();
       }
     },
 

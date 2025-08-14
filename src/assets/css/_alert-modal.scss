@@ -1,0 +1,89 @@
+@use '@/assets/css/colors' as c; // hoặc đường dẫn tới file màu của bạn
+@use "sass:map";
+.alert-modal {
+  // Header
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+
+  // Detail area
+  &__detail {
+    margin-top: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    background: map.get(map.get(c.$color-palettes-map, gray-light), 100);
+    max-height: 220px;
+    overflow: auto;
+    font-size: 0.85rem;
+    white-space: pre-wrap;
+  }
+
+  // Footer actions
+  &__actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  // Base button style
+  .am-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s, font-weight 0.2s;
+
+    &:hover {
+      font-weight: 600;
+    }
+
+    &--ghost {
+      background: map.get(map.get(c.$color-palettes-map, gray-dark), 200);
+      color: #111;
+    }
+
+    &--primary {
+      color: #fff;
+
+      &[data-variant='info'] {
+        background: map.get(map.get(c.$color-palettes-map, primary), 600);
+        &:hover { background: map.get(map.get(c.$color-palettes-map, primary), 700); }
+      }
+      &[data-variant='success'] {
+        background: map.get(map.get(c.$color-palettes-map, success), 600);
+        &:hover { background: map.get(map.get(c.$color-palettes-map, success), 700); }
+      }
+      &[data-variant='warning'] {
+        background: map.get(map.get(c.$color-palettes-map, warning), 600);
+        &:hover { background: map.get(map.get(c.$color-palettes-map, warning), 700); }
+      }
+      &[data-variant='danger'],
+      &[data-variant='confirm'] {
+        background: map.get(map.get(c.$color-palettes-map, danger), 600);
+        &:hover { background: map.get(map.get(c.$color-palettes-map, danger), 700); }
+      }
+    }
+  }
+
+  // Spinner
+  .am-spinner {
+    width: 1em;
+    height: 1em;
+    margin-right: 0.5em;
+    border: 0.2em solid rgba(255, 255, 255, 0.45);
+    border-top-color: #fff;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    animation: amspin 1s linear infinite;
+  }
+}
+
+@keyframes amspin {
+  to {
+    transform: rotate(360deg);
+  }
+}
