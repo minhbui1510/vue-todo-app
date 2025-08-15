@@ -8,10 +8,11 @@ import NoteCardView from "@/views/Note/sub-component/NoteCardView.vue";
 import {showAlert, showConfirm} from "@/composables/showModal.ts";
 import Paginator from "@/components/UI/Pagginator/Paginator.vue";
 import {FetchType} from "@/components/UI/model/paginator.enum.ts";
+import {useToast} from "@/components/UI/toast/useToast.ts";
 
 const noteStore = useNoteStore();
 const router = useRouter();
-
+const { toast } = useToast();
 // lấy ref reactivity đúng chuẩn pinia
 const { notesList, loading } = storeToRefs(noteStore);
 
@@ -23,6 +24,7 @@ const totalItems = ref(0);
 
 onMounted(async () => {
   await noteStore.searchNote({ keyword: '', pageIndex: 1, pageSize: 10 });
+   toast.success('Tải ghi chú 11     thành công', { duration: 2000 });
   // log sau khi fetch xong
   console.log('notesList (after fetch):',  toRaw((notesList.value)));
 });

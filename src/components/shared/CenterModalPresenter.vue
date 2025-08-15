@@ -22,7 +22,7 @@ async function onConfirm() {
     }
     s.resolve(true);
   } catch (e) {
-    // không đóng modal nếu callback lỗi — bạn có thể hiện toast ở đây
+    // không đóng modal nếu callback lỗi — bạn có thể hiện ở đây
     console.error(e);
   } finally {
     s.setLoading(false);

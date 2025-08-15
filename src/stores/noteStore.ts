@@ -9,7 +9,9 @@ import type {
 import noteService from '@/api/note.service.ts';
 import {normalizeError} from '@/api/http.ts';
 import {useCenterModalStore} from "@/stores/center-modal.store.ts";
+import {useToast} from "@/components/UI/toast/useToast.ts";
 
+const cm = useCenterModalStore();
 export const useNoteStore = defineStore('note', {
   state: () => ({
     notes: [] as Note[],
@@ -20,36 +22,47 @@ export const useNoteStore = defineStore('note', {
 
   actions: {
     async fetchNotes() {
+      const {toast} = useToast();
       this.loading = true;
+      cm.startLoading('Đang lấy dữ liệu');
       try {
         this.notes = await noteService.getAllNotes();
-        console.log(this.notes)
+        toast.success('Đã lưu thành công!', {duration: 2000});
       } catch (err) {
         this.error = 'Lỗi khi tải ghi chú';
         normalizeError(err)
       } finally {
         this.loading = false;
+        cm.stopLoading();
       }
     },
 
     async searchNote(search: SearchNoteDto) {
+      const {toast} = useToast();
       this.loading = true;
+      cm.startLoading('Đang lấy dữ liệu');
       try {
         this.notesList = await noteService.searchNote(search);
+        toast.success('Đã lưu thành công!', {duration: 2000});
       } catch (err) {
         this.error = 'Lỗi khi tải ghi chú';
         normalizeError(err)
       } finally {
         this.loading = false;
+        cm.stopLoading();
       }
     },
 
     async addNote(newNote: CreateNoteDto) {
+      cm.startLoading('Đang lưu');
       try {
         const created = await noteService.createNote(newNote);
         this.notes?.unshift(created); // thêm vào đầu danh sách
       } catch (err) {
         normalizeError(err);
+      } finally {
+        cm.stopLoading();
+
       }
     },
 
